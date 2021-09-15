@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:architechrure/model/post_model.dart';
 import 'package:http/http.dart';
+import 'package:patterns_mobx/models/post_model.dart';
 
 class Network {
   static String BASE = "jsonplaceholder.typicode.com";
-  static Map<String, String> headers = {
-    'Content-Type': 'application/json; charset=UTF-8'
-  };
+  static Map<String,String> headers = {'Content-Type':'application/json; charset=UTF-8'};
 
   /* Http Apis */
 
@@ -30,7 +28,7 @@ class Network {
   static Future<String> POST(String api, Map<String, String> params) async {
     print(params.toString());
     var uri = Uri.https(BASE, api); // http or https
-    var response = await post(uri, headers: headers, body: jsonEncode(params));
+    var response = await post(uri, headers: headers,body: jsonEncode(params));
     if (response.statusCode == 200 || response.statusCode == 201) {
       return response.body;
     }
@@ -39,7 +37,7 @@ class Network {
 
   static Future<String> PUT(String api, Map<String, String> params) async {
     var uri = Uri.https(BASE, api); // http or https
-    var response = await put(uri, headers: headers, body: jsonEncode(params));
+    var response = await put(uri, headers: headers,body: jsonEncode(params));
     if (response.statusCode == 200) {
       return response.body;
     }
@@ -83,7 +81,8 @@ class Network {
     return params;
   }
 
-  /*http parsing*/
+  /* Http Parsing */
+
   static List<Post> parsePostList(String response) {
     dynamic json = jsonDecode(response);
     var data = List<Post>.from(json.map((x) => Post.fromJson(x)));
